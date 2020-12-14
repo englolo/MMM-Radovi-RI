@@ -27,7 +27,7 @@ module.exports = NodeHelper.create({
 
             this.searchStreet = payload;
             getData();
-            console.log("Recived payload for search: " + this.searchStreet);
+            //console.log("Recived payload for search: " + this.searchStreet); //  //uncomment to see if you recive payload
         }
 
     },
@@ -90,11 +90,11 @@ async function getData() {
             elecList.push(elec);
 
         });
-        //console.log("elektra:", elecList);     //uncomment to see if you're getting data (in dev console)
+        //console.log("elektra:", elecList);     //uncomment to check, data sorted recived
 
     };
     if (!elElec) {
-        //console.log('No new entries for electrical!');   //uncomment to see if you're getting data (in dev console)
+        //console.log('No new entries for electrical!');   //uncomment to see, no data recived
     };
 
     if (elWater) {
@@ -128,11 +128,10 @@ async function getData() {
             waterList.push(water);
             
         });
-		//console.log("water:", waterList);  //uncomment to see if you're getting data (in dev console)
+		//console.log("water:", waterList);  // //uncomment to check, data sorted recived
     };
     if (!elWater) {
-        //   console.log('No new entries for water !');   //uncomment to see if you're getting data (in dev console)
-    };
+        //   console.log('No new entries for water !');   //uncomment to see, no data recived
     console.log(waterList);
 	
     self.sendSocketNotification('ELECTRIC_POWER_DISCONNECTED', {waterList:waterList,elecList:elecList});
