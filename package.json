@@ -1,0 +1,15 @@
+{
+  "name": "mmm-radovi-ri",
+  "version": "1.0.0",
+  "description": "",
+  "main": "MMM-Radovi-RI.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "puppeteer": "^5.5.0"
+  }
+}
