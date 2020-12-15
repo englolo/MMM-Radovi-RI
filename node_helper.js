@@ -95,6 +95,7 @@ async function getData() {
     };
     if (!elElec) {
         //console.log('No new entries for electrical!');   //uncomment to see, no data recived
+    }   
     };
 
     if (elWater) {
@@ -132,7 +133,8 @@ async function getData() {
     };
     if (!elWater) {
         //   console.log('No new entries for water !');   //uncomment to see, no data recived
-    console.log(waterList);
+    	}    
+    //console.log(waterList);
 	
     self.sendSocketNotification('ELECTRIC_POWER_DISCONNECTED', {waterList:waterList,elecList:elecList});
     
