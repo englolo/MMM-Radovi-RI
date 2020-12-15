@@ -145,7 +145,7 @@ Module.register("MMM-Radovi-RI", {
     },
 
     socketNotificationReceived: function (notification, payload) {
-        if (notification === "ELECTRIC_POWER_DISCONNECTED") {
+        if (notification === "POWER AND WATER OUTAGES") {
             this.workList(payload);
             this.updateDom(this.config.initialLoadDelay);
         }
