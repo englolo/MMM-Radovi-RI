@@ -36,8 +36,7 @@ module.exports = NodeHelper.create({
 
 async function getData() {
     const browser = await puppeteer.launch({
-        //headless: false,                   // hide show browser
-
+        executablePath: 'chromium-browser'
     });
 
     const page = await browser.newPage();
@@ -50,20 +49,19 @@ async function getData() {
 
     const $ = cheerio.load(html);
     var work=[];
-	var elec = [];
+    var elec = [];
     var water = [];
     var elecList = [];
-	var waterList = [];
+    var waterList = [];
     const elWater = $('#cphContent_cphSadrzaj_upVoda table tbody ')[0];
     const elElec = $('#cphContent_cphSadrzaj_upStruja table tbody ')[0];
     
 	
-	if (elElec) {
-
+    if (elElec) {
         var elementElec = $('#cphContent_cphSadrzaj_upStruja table tbody tr td span').filter(function () { 
             return $(this).text() === self.searchStreet;
-        }).parent().parent();
-        $(elementElec).each(function (jex, eEl) {
+            }).parent().parent();
+            $(elementElec).each(function (jex, eEl) {
             var note = "";
             const $eEl = $(eEl);
             let startDate = $eEl.prevAll('.datum').first().find('tr[class="datum"]>th>div').text().trim(); 
@@ -74,7 +72,7 @@ async function getData() {
             let endWork = $eEl.find('span[id*="Label6"]').text();
             let noteCheck = $eEl.children().children().first()[0];
             
-			if (noteCheck) {
+	    if (noteCheck) {
                 var note = $eEl.nextUntil().next().first('.tableNapomena').find('td[class="tableNapomena"]>div>div').text().trim();
             };
 
@@ -90,20 +88,19 @@ async function getData() {
             elecList.push(elec);
 
         });
-        //console.log("elektra:", elecList);     //uncomment to check, data sorted recived
+        //console.log("New entries for electrical!", elecList);     //uncomment to check, data sorted recived
 
     };
     if (!elElec) {
         //console.log('No new entries for electrical!');   //uncomment to see, no data recived
     }   
-    };
-
+    
     if (elWater) {
         var elementWater = $('#cphContent_cphSadrzaj_upVoda table tbody  span').filter(function () {
             return $(this).text() === self.searchStreet;
-        }).parent().parent();
-        $(elementWater).each(function (jex, wEl) {
-			var noteWater = "";
+            }).parent().parent();
+            $(elementWater).each(function (jex, wEl) {
+	    var noteWater = "";
             const $wEl = $(wEl);
             let startDate = $wEl.prevAll('.datum').first().find('tr[class="datum"]>th>div').text().trim();
             let street = $wEl.find('span[id*="Label2"]').text();
@@ -123,20 +120,20 @@ async function getData() {
                 startTime,
                 endTime,
                 endWork,
-				noteWater
+		noteWater
             };
 
             waterList.push(water);
-            
+           
         });
-		//console.log("water:", waterList);  // //uncomment to check, data sorted recived
+	 //   console.log('New entries for water!',waterList);   //uncomment to see, data sorted recived	
     };
     if (!elWater) {
-        //   console.log('No new entries for water !');   //uncomment to see, no data recived
+        //   console.log('No new entries for water!');   //uncomment to see, no data recived
     	}    
     //console.log(waterList);
 	
-    self.sendSocketNotification('ELECTRIC_POWER_DISCONNECTED', {waterList:waterList,elecList:elecList});
+    self.sendSocketNotification('POWER AND WATER OUTAGES', {waterList:waterList,elecList:elecList});
     
    
     await browser.close();
