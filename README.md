@@ -1,6 +1,6 @@
 # MMM-Radovi-RI
 
-Module for [MagicMirror](https://github.com/MichMich/MagicMirror) that scrapes [RI-info.net](http://www.ri-info.net/Radovi.aspx) for possible power and water outages in the city of Rijeka, Croatia.
+Module for [MagicMirror](https://github.com/MichMich/MagicMirror) that scrapes [RI-info.net](http://www.ri-info.net/Radovi.aspx) for possible power and water outages in the area of the city of Rijeka, Croatia.
 ![GitHub Logo](/images/testTable.PNG)
 ## Installation
 Clone this repository into the MagicMirror Modules folder:
