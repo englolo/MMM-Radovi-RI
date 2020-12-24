@@ -1,4 +1,4 @@
-# Alfa version
+
 
 # MMM-Radovi-RI
 
@@ -11,7 +11,7 @@ Clone this repository into the MagicMirror Modules folder:
 cd ~/MagicMirror/modules
 git clone https://github.com/englolo/MMM-Radovi-RI.git
 ```
-Install the dependencies (puppeteer, cheerio) in the MMM-Radovi_RI module folder:
+Install the dependencies (puppeteer, cheerio) in the MMM-Radovi-RI module folder:
 ```
 cd ~/MagicMirror/modules/MMM-Radovi-RI
 npm install
@@ -26,7 +26,15 @@ Add the following data to your config.js file
 	position: "top_right",            
 		config: {
 			street:"Brnelići",   // enter your street name (Nova Cesta, Primorje, Ratulje...)
-			place:"Dražice"      // enter your place name  (Rijeka, Dražice, Kostrena, Bakar...)
+			place:"Dražice",      // enter your place name  (Rijeka, Dražice, Kostrena, Bakar...)
+			chromiumPath:'chromium-browser',    
+			showBrowser:false
 		}
 }
 ```
+| Option | Default | Description |
+|:--|:-:|:--:|
+| ```place:```| REQUIRED | Enter your place. |
+|```street:```</code>| REQUIRED | Enter your street.|
+|```chromiumPath:```|  ```null```| ```null```if you want to use puppeteer browser in WIN10<br />```'chromium-browser'``` puppeteer browser for RPi4 <br />or use other browser<br />```'/path/to/Chrome'```|
+|```showBrowser: ```|   ```false ```| true: show chrome / false: hide chrome|

@@ -9,21 +9,20 @@
 
 Module.register("MMM-Radovi-RI", {
     defaults: {
-        header: "Loading DATA!",
-        initialLoadDelay: 4250,
+        initialLoadDelay: 2250,
         updateInterval: 2 * 60 * 60 * 1000,
     },
-    getStyles: function () {
+    
+	getStyles: function () {
     return ["font-awesome.css"];
     },
-    start: function () {
+    
+	start: function () {
         console.log("Starting module: " + this.name);
         requiresVersion: "2.1.0";
         this.scheduleUpdate();
-        //this.waterData = [];
-        //this.elecData = [];
         this.stretUpper = "";
-        var self = this;
+      
     },
     getTranslations: function () {
         return {
@@ -33,11 +32,7 @@ Module.register("MMM-Radovi-RI", {
     },
 
     getInfo: function (place) {
-        this.streetUpper = this.config.street.toUpperCase()
-        var searchStreet = this.streetUpper + ", " + this.config.place;
-        this.sendSocketNotification('GET_WORK_DATA', (searchStreet));
-        //console.log(searchStreet); 
-
+        this.sendSocketNotification('GET_WORK_DATA', this.config);
     },
 
     getDom: function () {
@@ -49,15 +44,15 @@ Module.register("MMM-Radovi-RI", {
             return wrapper;
         }
 
-        if (this.config.useHeader != false) {
+        if (this.loaded) {
             var header = document.createElement("header");
-            header.classList.add("small", "bright", "header-text");
+            header.classList.add("small", "bright", "header-text");                  //add new css
             header.innerHTML = this.translate("POWER_WATER_OUTAGES");
             wrapper.appendChild(header);
         }
 
         var placeElement = document.createElement('div');
-        placeElement.classList.add("xsmall", "bright");
+        placeElement.classList.add("xsmall", "bright");                           //add new css
         placeElement.innerHTML = this.config.street + ", " + this.config.place;
 
         var table = document.createElement('table');
@@ -73,7 +68,7 @@ Module.register("MMM-Radovi-RI", {
                 iconElecTd.appendChild(iconElec);
                 var dataTdElec = document.createElement('td');
                 var streetTrElec = document.createElement('span');
-                streetTrElec.classList.add("normal");
+                streetTrElec.classList.add("normal");                           //add new css
                 streetTrElec.innerHTML = this.translate("HOUSE_NUMBER") + "  " + this.elecData[j].streetNmbr + "<br>" + this.elecData[j].startDate + "  " + this.translate("FROM") + " " + this.elecData[j].startTime + " " + this.translate("TO") + " " + this.elecData[j].endTime + "<br>" + this.elecData[j].note;
                 dataTdElec.appendChild(streetTrElec);
                 mainTrElec.appendChild(iconElecTd);
@@ -82,10 +77,11 @@ Module.register("MMM-Radovi-RI", {
             }
         } else {
             var noDataElec = document.createElement('tr');
-            var iconElecNoData = document.createElement('i');
+            
+			var iconElecNoData = document.createElement('i');
             var textnoDataElec = document.createElement('td');
-            noDataElec.classList.add("normal");
-            textnoDataElec.classList.add("xsmall","dimmed" );
+            noDataElec.classList.add("normal");                        //add new class css
+            textnoDataElec.classList.add("xsmall","dimmed" );         //add new class css
             iconElecNoData.classList = "fas fa-bolt";
             textnoDataElec.innerHTML = this.translate("NO_NEW_ENTRIES").toUpperCase();
             noDataElec.appendChild(iconElecNoData);
@@ -104,7 +100,7 @@ Module.register("MMM-Radovi-RI", {
                 iconWaterTd.appendChild(iconWater);
                 var dataTdWater = document.createElement('td');
                 var streetTrWater = document.createElement('span');
-                streetTrWater.classList.add( "normal");
+                streetTrWater.classList.add( "normal");                             //add new class css
                 streetTrWater.innerHTML = this.translate("HOUSE_NUMBER") + "  " + this.waterData[i].streetNmbr + "<br>" + this.waterData[i].startDate + "  " + this.translate("FROM") + " " + this.waterData[i].startTime + " " + this.translate("TO") + " " + this.waterData[i].endTime + "<br>" + this.waterData[i].noteWater;
                 dataTdWater.appendChild(streetTrWater);
                 mainTrWater.appendChild(iconWaterTd);
@@ -115,8 +111,8 @@ Module.register("MMM-Radovi-RI", {
             var noDataWater = document.createElement('tr');
             var iconWaternoData = document.createElement('i');
             var textnoDataWater = document.createElement('td');
-            noDataWater.classList.add("normal"); 
-            textnoDataWater.classList.add("xsmall","dimmed");
+            noDataWater.classList.add("normal");                     //add new class css
+            textnoDataWater.classList.add("xsmall","dimmed");         //add new class css
             iconWaternoData.classList = "fas fa-tint";
             textnoDataWater.innerHTML = this.translate("NO_NEW_ENTRIES").toUpperCase();
             noDataWater.appendChild(iconWaternoData);
@@ -148,6 +144,7 @@ Module.register("MMM-Radovi-RI", {
         if (notification === "POWER AND WATER OUTAGES") {
             this.workList(payload);
             this.updateDom(this.config.initialLoadDelay);
+			
         }
         this.updateDom(this.config.initialLoadDelay);
     },
