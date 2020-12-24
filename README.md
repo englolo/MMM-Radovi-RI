@@ -11,7 +11,7 @@ Clone this repository into the MagicMirror Modules folder:
 cd ~/MagicMirror/modules
 git clone https://github.com/englolo/MMM-Radovi-RI.git
 ```
-Install the dependencies (puppeteer, cheerio) in the MMM-Radovi_RI module folder:
+Install the dependencies (puppeteer, cheerio) in the MMM-Radovi-RI module folder:
 ```
 cd ~/MagicMirror/modules/MMM-Radovi-RI
 npm install
