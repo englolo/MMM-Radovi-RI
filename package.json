@@ -1,12 +1,18 @@
 {
   "name": "mmm-radovi-ri",
   "version": "1.0.1",
-  "description": "",
+  "description": "MagicMirror module ",
   "main": "MMM-Radovi-RI.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  },  
+  "keywords": [
+    "magic mirror",
+    "module",
+    "Radovi-Ri",
+    "RI-info.net"
+  ],
+  "author": "Lolo",
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.9",
