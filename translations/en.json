@@ -1,10 +1,12 @@
 {
-    "POWER_WATER_OUTAGES" : " Power and water outages",
-    "NO_NEW_ENTRIES" : " No new entries",
+	"POWER_WATER_OUTAGES" : " Power and water outages",
+	"NO_NEW_ENTRIES" : " No new entries",
 	"STREET" : " Streeet",
 	"PLACE" : " Place",
-    "FROM" : "from",
+	"FROM" : "from",
 	"TO": "to",
 	"HOUSE_NUMBER" : "House number:",
-    "FOR" : " for "
+	"FOR" : " for ",
+	"ALL_NUMBERS" : "All house numbers",
+	"LOADING" : "Loading  "
 }
