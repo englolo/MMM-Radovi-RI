@@ -1,6 +1,6 @@
 {
   "name": "mmm-radovi-ri",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "MMM-Radovi-RI.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "puppeteer": "^5.5.0"
+    "cheerio": "^1.0.0-rc.9",
+    "puppeteer": "^10.0.0"
   }
 }
