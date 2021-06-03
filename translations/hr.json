@@ -6,7 +6,7 @@
 	"FROM" : "od",
 	"TO": "do",
 	"FOR": "za",
-	"HOUSE_NUMBER" : "Kućni broj:"
+	"HOUSE_NUMBER" : "Kućni broj:",
 	"ALL_NUMBERS" : "Svi kučni brojevi",
 	"LOADING" : "Učitava se  "
 }
