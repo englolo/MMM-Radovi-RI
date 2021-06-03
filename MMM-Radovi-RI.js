@@ -9,21 +9,21 @@
 
 Module.register("MMM-Radovi-RI", {
     defaults: {
-        initialLoadDelay: 2250,
+        initialLoadDelay: 2000,
         updateInterval: 2 * 60 * 60 * 1000,
+        animationSpeed: 2000,
     },
-    
-	getStyles: function () {
-    return ["font-awesome.css"];
+
+    getStyles: function () {
+        return ["font-awesome.css"];
     },
-    
-	start: function () {
+
+    start: function () {
         console.log("Starting module: " + this.name);
-        requiresVersion: "2.1.0";
+        requiresVersion: "2.1.5";
         this.scheduleUpdate();
-        this.stretUpper = "";
-      
     },
+
     getTranslations: function () {
         return {
             en: "translations/en.json",
@@ -36,117 +36,102 @@ Module.register("MMM-Radovi-RI", {
     },
 
     getDom: function () {
-        var wrapper = document.createElement("div");
+        const wrapper = document.createElement("div");
         wrapper.className = "wrapper";
 
-        if (!this.loaded) {
-            wrapper.innerHTML = "Awaiting  data...";
-            return wrapper;
+        if (!this.loaded) {			
+            wrapper.innerHTML = this.translate("LOADING")  + this.name;
+            wrapper.classList.add("small");
+			return wrapper;
         }
-
-        if (this.loaded) {
-            var header = document.createElement("header");
-            header.classList.add("small", "bright", "header-text");                  //add new css
-            header.innerHTML = this.translate("POWER_WATER_OUTAGES");
+		else {     
+            const header = document.createElement("header");
+            header.innerHTML = `${this.translate("POWER_WATER_OUTAGES")}<br>
+			<span class="xsmall bright"> ${this.config.street} ${this.config.place}</span>
+			`;
             wrapper.appendChild(header);
         }
-
-        var placeElement = document.createElement('div');
-        placeElement.classList.add("xsmall", "bright");                           //add new css
-        placeElement.innerHTML = this.config.street + ", " + this.config.place;
-
-        var table = document.createElement('table');
-      		
-////////////////////////////////////////////////////////////////////////////////////////// electricity list DOM loop
-        var j = Object.keys(this.elecData);
+        const table = document.createElement('table');
+         /* electric power data loop */
+        let j = Object.keys(this.elecData);
         if (j.length > 0) {
             for (j = 0; j < this.elecData.length; j++) {
-                var mainTrElec = document.createElement('tr');
-                var iconElecTd = document.createElement('td');
-                var iconElec = document.createElement('i');
-                iconElec.classList = "fas fa-bolt";
-                iconElecTd.appendChild(iconElec);
-                var dataTdElec = document.createElement('td');
-                var streetTrElec = document.createElement('span');
-                streetTrElec.classList.add("normal");                           //add new css
-                streetTrElec.innerHTML = this.translate("HOUSE_NUMBER") + "  " + this.elecData[j].streetNmbr + "<br>" + this.elecData[j].startDate + "  " + this.translate("FROM") + " " + this.elecData[j].startTime + " " + this.translate("TO") + " " + this.elecData[j].endTime + "<br>" + this.elecData[j].note;
-                dataTdElec.appendChild(streetTrElec);
-                mainTrElec.appendChild(iconElecTd);
-                mainTrElec.appendChild(dataTdElec);
-                table.appendChild(mainTrElec);
+                const mainTrElec = document.createElement('tr');
+                mainTrElec.classList.add("xsmall");
+                mainTrElec.innerHTML = `
+					<td>
+						<istyle="padding-right:10px" > classList="fas fa-bolt "</i>
+					</td>
+					<td>
+						<span>${this.translate("HOUSE_NUMBER")} ${this.elecData[j].streetNmbr}<br>${this.elecData[j].startDate} ${this.translate("FROM")} ${this.elecData[j].startTime} ${this.translate("TO")} ${this.elecData[j].endTime}<br> ${this.elecData[j].noteElec} </span>
+					</td>
+					`
+                 table.appendChild(mainTrElec);
             }
         } else {
-            var noDataElec = document.createElement('tr');
-            
-			var iconElecNoData = document.createElement('i');
-            var textnoDataElec = document.createElement('td');
-            noDataElec.classList.add("normal");                        //add new class css
-            textnoDataElec.classList.add("xsmall","dimmed" );         //add new class css
-            iconElecNoData.classList = "fas fa-bolt";
-            textnoDataElec.innerHTML = this.translate("NO_NEW_ENTRIES").toUpperCase();
-            noDataElec.appendChild(iconElecNoData);
-            noDataElec.appendChild(textnoDataElec);
-            table.appendChild(noDataElec);
+            const noDataElec = document.createElement('tr');
+            noDataElec.classList.add("xsmall", "normal");
+            noDataElec.innerHTML = `
+				<td style="padding-right:10px">
+					<i class="fas fa-bolt"></i>
+					<td class="xsmall dimmed">${this.translate("NO_NEW_ENTRIES").toUpperCase()}
+				</td>
+				`
+                table.appendChild(noDataElec);
         }
- /////////////////////////////////////////////////////////////////////  water list DOM loop
-        var i = Object.keys(this.waterData);
+         /* water data loop */
+        let i = Object.keys(this.waterData);
         if (i.length > 0) {
             for (i = 0; i < this.waterData.length; i++) {
-
-                var mainTrWater = document.createElement('tr');
-                var iconWaterTd = document.createElement('td');
-                var iconWater = document.createElement('i');
-                iconWater.classList = "fas fa-tint ";
-                iconWaterTd.appendChild(iconWater);
-                var dataTdWater = document.createElement('td');
-                var streetTrWater = document.createElement('span');
-                streetTrWater.classList.add( "normal");                             //add new class css
-                streetTrWater.innerHTML = this.translate("HOUSE_NUMBER") + "  " + this.waterData[i].streetNmbr + "<br>" + this.waterData[i].startDate + "  " + this.translate("FROM") + " " + this.waterData[i].startTime + " " + this.translate("TO") + " " + this.waterData[i].endTime + "<br>" + this.waterData[i].noteWater;
-                dataTdWater.appendChild(streetTrWater);
-                mainTrWater.appendChild(iconWaterTd);
-                mainTrWater.appendChild(dataTdWater);
-                table.appendChild(mainTrWater);
+                const mainTrWater = document.createElement('tr');
+                mainTrWater.classList.add("xsmall");
+                mainTrWater.innerHTML = `
+					<td style="padding-right:10px">
+						<i class="fas fa-tint"></i>
+					</td>
+					<td>
+						<span class="normal xsmall">${this.waterData[i].streetNmbr ? this.translate("HOUSE_NUMBER") : this.translate("ALL_NUMBERS")} ${this.waterData[i].streetNmbr}<br>
+						${this.waterData[i].startDate} ${this.translate("FROM")} ${this.waterData[i].startTime} ${this.translate("TO")} ${this.waterData[i].endTime}<br>
+						${this.waterData[i].noteWater}</span>
+					</td>
+					`
+                 table.appendChild(mainTrWater);
             }
         } else {
-            var noDataWater = document.createElement('tr');
-            var iconWaternoData = document.createElement('i');
-            var textnoDataWater = document.createElement('td');
-            noDataWater.classList.add("normal");                     //add new class css
-            textnoDataWater.classList.add("xsmall","dimmed");         //add new class css
-            iconWaternoData.classList = "fas fa-tint";
-            textnoDataWater.innerHTML = this.translate("NO_NEW_ENTRIES").toUpperCase();
-            noDataWater.appendChild(iconWaternoData);
-            noDataWater.appendChild(textnoDataWater);
+            const noDataWater = document.createElement('tr');
+            noDataWater.classList.add("xsmall", "normal");
+            noDataWater.innerHTML = `
+				<td style="padding-right:10px">
+					<i class="fas fa-tint"></i>
+					<td class="xsmall dimmed">${this.translate("NO_NEW_ENTRIES").toUpperCase()}
+				</td>
+				`
             table.appendChild(noDataWater);
         }
- //////////////////////////////////////////////////////////////////////////////////////////
-        placeElement.appendChild(table);
-        wrapper.appendChild(placeElement);
+        wrapper.appendChild(table);
         return wrapper;
-    }, // <-- closes the getDom function from above
+    },
 
-    workList: function (data) {
-        this.waterData = data.waterList; 
-        this.elecData = data.elecList; 
-        this.loaded = true;
-        //console.log(this.waterData);  //uncomment to see if you're getting data (in dev console)
-        //console.log(this.elecData);   //uncomment to see if you're getting data (in dev console)
+    sortPayload: function (data) {
+        this.waterData = data.waterList;
+        this.elecData = data.elecList;        
     },
 
     scheduleUpdate: function () {
         setInterval(() => {
             this.getInfo();
         }, this.config.updateInterval);
-        this.getInfo(this.config.initialLoadDelay);
+        this.getInfo();
     },
 
     socketNotificationReceived: function (notification, payload) {
         if (notification === "POWER AND WATER OUTAGES") {
-            this.workList(payload);
-            this.updateDom(this.config.initialLoadDelay);
-			
+            this.loaded = true;
+            this.sortPayload(payload);
+            this.updateDom(this.config.animationSpeed);
         }
-        this.updateDom(this.config.initialLoadDelay);
+        this.updateDom(this.config.animationSpeed);
     },
 
+});
 });
