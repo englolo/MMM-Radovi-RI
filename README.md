@@ -38,3 +38,15 @@ Add the following data to your config.js file
 |```street:```</code>| REQUIRED | Enter your street.|
 |```chromiumPath:```|  ```null```| ```null```if you want to use puppeteer browser in WIN10<br />```'chromium-browser'``` puppeteer browser for RPi4 <br />or use other browser<br />```'/path/to/Chrome'```|
 |```showBrowser: ```|   ```false ```| true: show chrome / false: hide chrome|
+|```initialLoadDelay: ```|```2000 ```| delay for node_helper to start scraping|
+
+## Change Log
+
+### [1.0.1] 2021-06-03
+- Cleaned  unnecessary code
+- Added delay to node_helper
+- update dependencies - cherrio and puppeteer 
+- changing to es6 notation
+
+### [1.0.0] 2020-12-24 
+- initial release
