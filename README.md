@@ -46,7 +46,6 @@ Add the following data to your config.js file
 - Cleaned  unnecessary code
 - Added delay to node_helper
 - update dependencies - cherrio and puppeteer 
-- implementing es6 notation
 
 ### [1.0.0] 2020-12-24 
 - initial release
